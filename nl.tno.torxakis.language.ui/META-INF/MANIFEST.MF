@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: nl.tno.torxakis.language.ui
+Bundle-Vendor: TNO and Radboud University
+Bundle-Version: 1.1.1.qualifier
+Bundle-SymbolicName: nl.tno.torxakis.language.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: nl.tno.torxakis.language,
+ nl.tno.torxakis.language.ide,
+ org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.ui,
+ org.eclipse.compare,
+ org.eclipse.xtext.builder,
+ org.eclipse.xtend.lib;resolution:=optional,
+ org.eclipse.xtext.xbase.lib
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: nl.tno.torxakis.language.ui.quickfix,
+ nl.tno.torxakis.language.ui.contentassist,
+ nl.tno.torxakis.language.ui.internal
+Bundle-Activator: nl.tno.torxakis.language.ui.internal.LanguageActivator

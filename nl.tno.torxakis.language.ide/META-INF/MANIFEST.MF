@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: nl.tno.torxakis.language.ide
+Bundle-Vendor: TNO and Radboud University
+Bundle-Version: 1.1.1.qualifier
+Bundle-SymbolicName: nl.tno.torxakis.language.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: nl.tno.torxakis.language,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: nl.tno.torxakis.language.ide.contentassist.antlr.internal,
+ nl.tno.torxakis.language.ide.contentassist.antlr
+

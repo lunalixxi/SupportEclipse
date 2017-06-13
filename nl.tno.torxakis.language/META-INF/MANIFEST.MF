@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: nl.tno.torxakis.language
+Bundle-Vendor: TNO and Radboud University
+Bundle-Version: 1.1.1.qualifier
+Bundle-SymbolicName: nl.tno.torxakis.language; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.util,
+ org.eclipse.xtend.lib,
+ org.eclipse.emf.common
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: nl.tno.torxakis.language.torXakisDsl.util,
+ nl.tno.torxakis.language.validation,
+ nl.tno.torxakis.language.services,
+ nl.tno.torxakis.language.serializer,
+ nl.tno.torxakis.language,
+ nl.tno.torxakis.language.generator,
+ nl.tno.torxakis.language.torXakisDsl,
+ nl.tno.torxakis.language.torXakisDsl.impl,
+ nl.tno.torxakis.language.parser.antlr.internal,
+ nl.tno.torxakis.language.scoping,
+ nl.tno.torxakis.language.parser.antlr
+Import-Package: org.apache.log4j
