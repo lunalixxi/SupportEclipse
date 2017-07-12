@@ -5,108 +5,117 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 generate torXakisDsl "http://www.tno.nl/torxakis/language/TorXakisDsl"
 
 Model returns Model:
-	(	
-		typeDefs+=TypeDefs
-	|	funcDefs+=FuncDefs
-	| 	constDefs+=ConstDefs
-	|	procDefs+=ProcDefs
-	|   stautDefs+=StautDefs
-	|   channelDefs+=ChannelDefs
-	|   modelDef+=ModelDef
-	| 	mapperDef+=MapperDef
-	| 	cnectDef+=CnectDef
-	)*
+    (    
+        typeDefs+=TypeDefs
+    |   funcDefs+=FuncDefs
+    |   constDefs+=ConstDefs
+    |   procDefs+=ProcDefs
+    |   stautDefs+=StautDefs
+    |   channelDefs+=ChannelDefs
+    |   modelDef+=ModelDef
+    |   purpDef +=PurpDef
+    |   mapperDef+=MapperDef
+    |   cnectDef+=CnectDef
+    )*
 ;
 
 TypeDefs returns TypeDefs:
-	'TYPEDEF' typeDefs+=TypeDef (';' typeDefs+=TypeDef)* 'ENDDEF' 
+    'TYPEDEF' typeDefs+=TypeDef (';' typeDefs+=TypeDef)* 'ENDDEF' 
 ;
 
 TypeDef returns TypeDef:
-	name=TypeName '::=' neConstructorList=NeConstructorList
+    name=TypeName '::=' neConstructorList=NeConstructorList
 ;
 
 FuncDefs returns FuncDefs:
-	'FUNCDEF' funcDefs+=FuncDef (';' funcDefs+=FuncDef)* 'ENDDEF'
+    'FUNCDEF' funcDefs+=FuncDef (';' funcDefs+=FuncDef)* 'ENDDEF'
 ;
 
 FuncDef returns FuncDef:
-	funcName=FuncName '(' ( neVarsDelarationList=NeVarsDeclarationList ) ')' "::" typeName=TypeName "::=" valExpr=ValExpr
+    funcName=FuncName '(' ( neVarsDelarationList=NeVarsDeclarationList ) ')' "::" typeName=TypeName "::=" valExpr=ValExpr
 ;
 
 ConstDefs returns ConstDefs:
-	'CONSTDEF' constDefs+=ConstDef (';' constDefs+=ConstDef)* 'ENDDEF'
+    'CONSTDEF' constDefs+=ConstDef (';' constDefs+=ConstDef)* 'ENDDEF'
 ;
 
 ConstDef returns ConstDef:
-	name=ConstName "::" typeName=TypeName "::=" valExpr=ValExpr
+    name=ConstName "::" typeName=TypeName "::=" valExpr=ValExpr
 ;
 
 ProcDefs returns ProcDefs:
-	'PROCDEF' procDefs+=ProcDef (';' procDefs+=ProcDef )* 'ENDDEF' 
+    'PROCDEF' procDefs+=ProcDef (';' procDefs+=ProcDef )* 'ENDDEF' 
 ;
 
 ProcDef returns ProcDef:
-	name=ProcName '[' ( neChannelDeclList=NeChannelsDeclList)? ']' '(' (neVarDeclList=NeVarDeclList)? ')' (exitDecl=ExitDecl)? '::=' processBehaviour=ProcessBehaviour
+    name=ProcName '[' ( neChannelDeclList=NeChannelsDeclList)? ']' '(' (neVarDeclList=NeVarDeclList)? ')' (exitDecl=ExitDecl)? '::=' processBehaviour=ProcessBehaviour
 ;
 
 StautDefs returns StautDefs:
-	'STAUTDEF' stautDefs+=StautDef (';' stautDefs+=StautDef )* 'ENDDEF' 
+    'STAUTDEF' stautDefs+=StautDef (';' stautDefs+=StautDef )* 'ENDDEF' 
 ;
 
 StautDef returns StautDef:
-	name=StautName '[' ( neChannelDeclList=NeChannelsDeclList)? ']' '(' (neVarDeclList=NeVarDeclList)? ')' (exitDecl=ExitDecl)? '::=' stautItems=StautItems
+    name=StautName '[' ( neChannelDeclList=NeChannelsDeclList)? ']' '(' (neVarDeclList=NeVarDeclList)? ')' (exitDecl=ExitDecl)? '::=' stautItems=StautItems
 ;
 
 ChannelDefs returns ChannelDefs:
-	'CHANDEF' ChannelDefs+=ChannelDef 
-	// (';' ChannelDefs+=ChannelDef )* 
-	'ENDDEF' 
+    'CHANDEF' ChannelDefs+=ChannelDef 
+    // (';' ChannelDefs+=ChannelDef )* 
+    'ENDDEF' 
 ;
 
 ChannelDef returns ChannelDef:
-	name=ChannelDefName '::=' neChannelDeclList=NeChannelsDeclList
+    name=ChannelDefName '::=' neChannelDeclList=NeChannelsDeclList
 ;
 
 ModelDef returns ModelDef:
-	'MODELDEF' modelName=ModelName '::=' 
-		'CHAN' 'IN'  ( neInputChannelNameList=NeChannelNameList )?
-		'CHAN' 'OUT' ( neOutputChannelNameList=NeChannelNameList )?
-		'BEHAVIOUR' processBehaviour=ProcessBehaviour
-	'ENDDEF'
+    'MODELDEF' modelName=ModelName '::=' 
+        'CHAN' 'IN'  ( neInputChannelNameList=NeChannelNameList )?
+        'CHAN' 'OUT' ( neOutputChannelNameList=NeChannelNameList )?
+        'BEHAVIOUR' processBehaviour=ProcessBehaviour
+    'ENDDEF'
+;
+
+PurpDef returns PurpDef:
+    'PURPDEF' purpName=PurpName '::=' 
+        'CHAN' 'IN'  ( neInputChannelNameList=NeChannelNameList )?
+        'CHAN' 'OUT' ( neOutputChannelNameList=NeChannelNameList )?
+        testGoals=NeTestGoals
+    'ENDDEF'
 ;
 
 MapperDef returns MapperDef:
-	'MAPPERDEF' mapperName=MapperName '::=' 
-		'CHAN' 'IN'  ( chanInNeChannelsDeclList=NeChannelsDeclList)? 
-		'CHAN' 'OUT' ( chanOutNeChannelsDeclList=NeChannelsDeclList )? 
-		'BEHAVIOUR' processBehaviour=ProcessBehaviour
-	'ENDDEF'
+    'MAPPERDEF' mapperName=MapperName '::=' 
+        'CHAN' 'IN'  ( chanInNeChannelsDeclList=NeChannelsDeclList)? 
+        'CHAN' 'OUT' ( chanOutNeChannelsDeclList=NeChannelsDeclList )? 
+        'BEHAVIOUR' processBehaviour=ProcessBehaviour
+    'ENDDEF'
 ;
 
 CnectDef returns CnectDef:
-	'CNECTDEF' cnectName=CnectName '::=' 
-		cnectType=( 'CLIENTSOCK' | 'SERVERSOCK' )
-		connectionItems+=ConnectionItem*
-	'ENDDEF'
+    'CNECTDEF' cnectName=CnectName '::=' 
+        cnectType=( 'CLIENTSOCK' | 'SERVERSOCK' )
+        connectionItems+=ConnectionItem*
+    'ENDDEF'
 ;
 
 StautItems returns StautItems:
-	{StautItems}
-	(
-			stateItems+=StateItem
-		|	varItems+=VarItem
-		|	initItems+=InitItem
-		|	transItems+=TransItem
-	)*
+    {StautItems}
+    (
+             stateItems+=StateItem
+        |    varItems+=VarItem
+        |    initItems+=InitItem
+        |    transItems+=TransItem
+    )*
 ;
 
 StateItem returns StateItem:
-	'STATE' list=NeIdNameList 
+    'STATE' list=NeIdNameList 
 ;
 
 VarItem returns VarItem:
-	{VarItem}
+    {VarItem}
     'VAR' (neVarsDelarationList=NeVarsDeclarationList)?
 ;
 
@@ -130,350 +139,361 @@ Update returns Update:
     varName+=VarName ':=' valExpr+=ValExpr
 ;
 
+PurpName returns PurpName:
+    name=CAPSID
+;
+
 MapperName returns MapperName:
-	name=CAPSID
+    name=CAPSID
 ;
 
 NeConstructorList returns NeConstructorList:
-	constructors+=Constructor ( '|' constructor+=Constructor )*
+    constructors+=Constructor ( '|' constructor+=Constructor )*
 ;
 
 Constructor returns Constructor:
-	name=ConstructorName  ( '{' neFieldsList=NeFieldList '}' )?
+    name=ConstructorName  ( '{' neFieldsList=NeFieldList '}' )?
 ;
 
 NeFieldList returns NeFieldList:
-	fields+=Fields ( ';' fields+=Fields )*
+    fields+=Fields ( ';' fields+=Fields )*
 ;
 
 Fields returns Fields:
-	neFieldNameList=NeFieldNameList '::' typeName=TypeName
+    neFieldNameList=NeFieldNameList '::' typeName=TypeName
 ;
 
 NeFieldNameList returns NeFieldNameList:
-	fieldNames+=FieldName ( ',' fieldNames+=FieldName )*
+    fieldNames+=FieldName ( ',' fieldNames+=FieldName )*
 ;
 
 FieldName returns FieldName:
-	name=SMALLID
+    name=SMALLID
 ;
 
 ExitDecl returns ExitDecl:
-	exit='EXIT' ('::' neTypeNameList=NeTypeNameList)?
+    exit='EXIT' ('::' neTypeNameList=NeTypeNameList)?
 ;
 
 
 ModelName returns ModelName:
-	name=CAPSID
+    name=CAPSID
 ;
 
+NeTestGoals returns NeTestGoals:
+    testGoals+=TestGoal (testGoals+=TestGoal)*
+;
+
+TestGoal returns TestGoal:
+    'GOAL' '::=' processBehaviour=ProcessBehaviour
+;
 
 ConnectionItem returns ConnectionItem:
-	(
-			ConnectionOut
-		|	ConnectionIn
-		|	Encoding
-		|	Decoding
-	)
+    (
+            ConnectionOut
+        |    ConnectionIn
+        |    Encoding
+        |    Decoding
+    )
 ;
 
 ConnectionOut returns ConnectionOut:
-	'CHAN' 'OUT' channelsDecl=ChannelsDecl 'HOST' hostName=HostName 'PORT' portNumber=PortNumber
+    'CHAN' 'OUT' channelsDecl=ChannelsDecl 'HOST' hostName=HostName 'PORT' portNumber=PortNumber
 ;
 
 ConnectionIn returns ConnectionIn:
-	'CHAN' 'IN' channelsDecl=ChannelsDecl 'HOST' hostName=HostName 'PORT' portNumber=PortNumber
+    'CHAN' 'IN' channelsDecl=ChannelsDecl 'HOST' hostName=HostName 'PORT' portNumber=PortNumber
 ;
 
 Encoding returns Encoding:
-	'ENCODE' communication=Communication '->' channelOffer=ChannelOffer
+    'ENCODE' communication=Communication '->' channelOffer=ChannelOffer
 ;
 
 Decoding returns Decoding:
-	'DECODE' communication=Communication '<-' channelOffer=ChannelOffer
+    'DECODE' communication=Communication '<-' channelOffer=ChannelOffer
 ;
 
 PortNumber returns PortNumber:
-	portNumber=INT
+    portNumber=INT
 ;
 
 HostName returns HostName:
-	name=STRING
+    name=STRING
 ;
 
 StautName returns StautName:
-	name=CAPSID
+    name=CAPSID
 ;
 
 ChannelDefName returns ChannelDefName:
-	name=CAPSID
+    name=CAPSID
 ;
 
 ProcName returns ProcName:
-	name=SMALLID
+    name=SMALLID
 ;
 
 CnectName returns CnectName:
-	name=CAPSID
+    name=CAPSID
 ;
 
 NeVarsDeclarationList returns NeVarsDeclarationList:
-	varsDeclarations+=VarsDeclaration (";" varsDeclarations+=VarsDeclaration )*
+    varsDeclarations+=VarsDeclaration (";" varsDeclarations+=VarsDeclaration )*
 ;
 
 VarsDeclaration returns VarsDeclaration:
-	neVarNameList=NeVarNameList "::" typeName=TypeName
+    neVarNameList=NeVarNameList "::" typeName=TypeName
 ;
 
 NeVarDeclList returns NeVarDeclList:
-	varsDecls+=VarsDecl (";" varsDecls+=VarsDecl)*
+    varsDecls+=VarsDecl (";" varsDecls+=VarsDecl)*
 ;
 
 VarsDecl returns VarsDecl:
-	neVarNameList=NeVarNameList "::" typeName=TypeName
+    neVarNameList=NeVarNameList "::" typeName=TypeName
 ;
 
 NeChannelsDeclList returns NeChannelsDeclList:
-	channelsDecls+=ChannelsDecl ( ';' channelsDecls+=ChannelsDecl )*
+    channelsDecls+=ChannelsDecl ( ';' channelsDecls+=ChannelsDecl )*
 ;
 
 ChannelsDecl returns ChannelsDecl:
-	neChannelNameList=NeChannelNameList ( '::' neTypeNameList=NeTypeNameList)?
+    neChannelNameList=NeChannelNameList ( '::' neTypeNameList=NeTypeNameList)?
 ;
 
 NeTypeNameList returns NeTypeNameList:
-	typeNames+=TypeName ("#" typeNames+=TypeName)*
+    typeNames+=TypeName ("#" typeNames+=TypeName)*
 ;
 
 TypeName returns TypeName:
-	name=CAPSID
+    name=CAPSID
 ;
 
 NeChannelNameList returns NeChannelNameList:
-	channelNames+=ChannelName ("," channelNames+=ChannelName)*
+    channelNames+=ChannelName ("," channelNames+=ChannelName)*
 ;
 
 NeIdNameList returns NeIdNameList:
-	idNames+=IdName ("," idNames+=IdName)*
+    idNames+=IdName ("," idNames+=IdName)*
 ;
 
 IdName returns IdName:
-		name=SMALLID
-	| 	name=CAPSID
+        name=SMALLID
+    |     name=CAPSID
 ;
 
 ChannelName returns ChannelName:
-	name=CAPSID
+    name=CAPSID
 ;
 
 NeVarNameList returns NeVarNameList:
-	varNames+=VarName ("," varNames+=VarName)*
+    varNames+=VarName ("," varNames+=VarName)*
 ;
 
 VarName returns VarName:
-	name=SMALLID
+    name=SMALLID
 ;
 
 ProcessBehaviour returns ProcessBehaviour:
-	ProcessBehaviourLevel1
+    ProcessBehaviourLevel1
 ;
 
 ProcessBehaviourLevel1 returns ProcessBehaviour:
-	ProcessBehaviourLevel2
-	( ( {ProcessBehaviourEnable.left=current} '>>>' right=ProcessBehaviourLevel2 ) 
-	| ( {ProcessBehaviourEnableAccept.left=current} '>>>' 'ACCEPT' ( '?' (varDecls+=VarDecl | varNames+=VarName) | '!' valExprs+=ValExpr )* 'IN' right=ProcessBehaviourLevel2 'NI' )
-	| ( {ProcessBehaviourDisable.left=current} '[>>' right=ProcessBehaviourLevel2 )
-	| ( {ProcessBehaviourInterrupt.left=current} '[><' right=ProcessBehaviourLevel2 )	
-	)*
+    ProcessBehaviourLevel2
+    ( ( {ProcessBehaviourEnable.left=current} '>>>' right=ProcessBehaviourLevel2 ) 
+    | ( {ProcessBehaviourEnableAccept.left=current} '>>>' 'ACCEPT' ( '?' (varDecls+=VarDecl | varNames+=VarName) | '!' valExprs+=ValExpr )* 'IN' right=ProcessBehaviourLevel2 'NI' )
+    | ( {ProcessBehaviourDisable.left=current} '[>>' right=ProcessBehaviourLevel2 )
+    | ( {ProcessBehaviourInterrupt.left=current} '[><' right=ProcessBehaviourLevel2 )    
+    )*
 ;
 
 ProcessBehaviourLevel2 returns ProcessBehaviour:
-	ProcessBehaviourLevel3
-	( ( {ProcessBehaviourSynchronized.left=current} '||' right=ProcessBehaviourLevel3 )
-	| ( {ProcessBehaviourParallel.left=current} '|||' right=ProcessBehaviourLevel3 )
-	| ( {ProcessBehaviourSynchronizeChannels.left=current} synchronizedChannels=SynchronizedChannels right=ProcessBehaviourLevel3 )	
-	)*
+    ProcessBehaviourLevel3
+    ( ( {ProcessBehaviourSynchronized.left=current} '||' right=ProcessBehaviourLevel3 )
+    | ( {ProcessBehaviourParallel.left=current} '|||' right=ProcessBehaviourLevel3 )
+    | ( {ProcessBehaviourSynchronizeChannels.left=current} synchronizedChannels=SynchronizedChannels right=ProcessBehaviourLevel3 )    
+    )*
 ;
 
 ProcessBehaviourLevel3 returns ProcessBehaviour:
-	ProcessBehaviourLevel4
-	( ( {ProcessBehaviourChoice.left=current} '##' right=ProcessBehaviourLevel4 )
-	)*
+    ProcessBehaviourLevel4
+    ( ( {ProcessBehaviourChoice.left=current} '##' right=ProcessBehaviourLevel4 )
+    )*
 ;
 
 ProcessBehaviourLevel4 returns ProcessBehaviour:
-	  ProcessBehaviourGuarded
-	| ProcessBehaviourStop
-	| ProcessBehaviourSequence
-	| ProcCall
-	| ProcessBehaviourLet
-	| ProcessBehaviourHide
-	| ProcessBehaviourBracket	
+      ProcessBehaviourGuarded
+    | ProcessBehaviourStop
+    | ProcessBehaviourSequence
+    | ProcCall
+    | ProcessBehaviourLet
+    | ProcessBehaviourHide
+    | ProcessBehaviourBracket    
 ;
 
 ProcCall returns ProcCall:
-	name=ProcName '[' (neChannelNameList=NeChannelNameList)? ']' '(' (neValExprList=NeValExprList)? ')'
+    name=ProcName '[' (neChannelNameList=NeChannelNameList)? ']' '(' (neValExprList=NeValExprList)? ')'
 ;
 
 NeValExprList returns NeValExprList:
-	valExprs+=ValExpr ( ',' valExprs+=ValExpr )*
+    valExprs+=ValExpr ( ',' valExprs+=ValExpr )*
 ;
 
 ProcessBehaviourBracket:
-	'(' sub=ProcessBehaviourLevel1 ')'
+    '(' sub=ProcessBehaviourLevel1 ')'
 ;
 
 ProcessBehaviourHide:
-	'HIDE' '[' (neChannelsDeclList=NeChannelsDeclList)? ']' 'IN' sub=ProcessBehaviourLevel1 'NI'
+    'HIDE' '[' (neChannelsDeclList=NeChannelsDeclList)? ']' 'IN' sub=ProcessBehaviourLevel1 'NI'
 ;
 
 ProcessBehaviourLet:
-	'LET' assignments+=Assignment ( ';' assignments+=Assignment )* 'IN' sub=ProcessBehaviourLevel1 'NI'
+    'LET' assignments+=Assignment ( ';' assignments+=Assignment )* 'IN' sub=ProcessBehaviourLevel1 'NI'
 ;
 
 ProcessBehaviourSequence:
-	conditionalCommunications=ConditionalCommunications ( '>->' sub=ProcessBehaviourLevel4 )?
+    conditionalCommunications=ConditionalCommunications ( '>->' sub=ProcessBehaviourLevel4 )?
 ;
 
 ProcessBehaviourGuarded:
-	condition=Condition '=>>' sub=ProcessBehaviourLevel4
+    condition=Condition '=>>' sub=ProcessBehaviourLevel4
 ;
 
 
 ProcessBehaviourStop returns ProcessBehaviourStop:
-	stop='STOP'
+    stop='STOP'
 ;
 
 SynchronizedChannels:
-	'|[' neChannelNameList=NeChannelNameList ']|'	
+    '|[' neChannelNameList=NeChannelNameList ']|'    
 ;
 
 
 ConditionalCommunications returns ConditionalCommunications:
-	{ConditionalCommunications}
-	communications+=Communications (condition=Condition)?
+    {ConditionalCommunications}
+    communications+=Communications (condition=Condition)?
 ;
 
 Communications returns Communications:
-	{Communications}
-	communications+=Communication ( '|' communications+=Communication )*
+    {Communications}
+    communications+=Communication ( '|' communications+=Communication )*
 ;
 
 Communication returns Communication:
-	{Communication}
-	( (channelName=ChannelName | exit='EXIT' ) channelOffers+=ChannelOffer*
-	)
+    {Communication}
+    ( (channelName=ChannelName | exit='EXIT' ) channelOffers+=ChannelOffer*
+    )
 ;
 
 ChannelOffer:
-	'!' valExprs+=ValExpr | '?' (varDecls+=VarDecl | varNames+=VarName)
+    '!' valExprs+=ValExpr | '?' (varDecls+=VarDecl | varNames+=VarName)
 ;
 
 Condition returns Condition:
-	{Condition}
-	'[[' valExpr=ValExpr ']]'
+    {Condition}
+    '[[' valExpr=ValExpr ']]'
 ;
 
 Assignment returns Assignment:
-	( varDecl=VarDecl | varName=VarName ) '=' valExpr=ValExpr
+    ( varDecl=VarDecl | varName=VarName ) '=' valExpr=ValExpr
 ;
 
 VarDecl returns VarDecl:
-	varName=VarName '::' typeName=TypeName
+    varName=VarName '::' typeName=TypeName
 ;
 
 
 ValExpr:
-	ValExpr1
+    ValExpr1
 ;
 
 ValExpr1 returns ValExpr:
-	ValExpr2
-	( ( {ValExprOperator.left=current} operator=OPERATOR right=ValExpr2 )
-	| ( {ValExprTest.left=current} '::' typeName=TypeName )
-	)*
-	| ValExprLet
-	| ValExprIte
+    ValExpr2
+    ( ( {ValExprOperator.left=current} operator=OPERATOR right=ValExpr2 )
+    | ( {ValExprTest.left=current} '::' typeName=TypeName )
+    )*
+    | ValExprLet
+    | ValExprIte
 ;
 
 
 ValExpr2:
-		SmallIdName // Temporarily solution for the conflict in the next two
-//		ValExprConst
-//	|	ValExprVar
-	|	ValExprUnaryOperator
-	|	ValExprFunctionCall
-	| 	ValExprContructorCall
-	|	ValExprInteger
-	|	ValExprString
-	| 	ValExprRegex
-	|	ValExprBracket
-	|	ValExprError
+        SmallIdName // Temporarily solution for the conflict in the next two
+//        ValExprConst
+//    |    ValExprVar
+    |    ValExprUnaryOperator
+    |    ValExprFunctionCall
+    |     ValExprContructorCall
+    |    ValExprInteger
+    |    ValExprString
+    |     ValExprRegex
+    |    ValExprBracket
+    |    ValExprError
 ;
 
 ValExprUnaryOperator:
-	operator=OPERATOR valExpr=ValExpr2
+    operator=OPERATOR valExpr=ValExpr2
 ;
 
 SmallIdName:
-	name=SMALLID
+    name=SMALLID
 ;
 
 ValExprError:
-	'ERROR' error=STRING
+    'ERROR' error=STRING
 ;
 
 ValExprIte:
-	'IF' conditionValExpr=ValExpr1 'THEN' thenValExpr=ValExpr1 'ELSE' elseValExpr=ValExpr1 'FI'
+    'IF' conditionValExpr=ValExpr1 'THEN' thenValExpr=ValExpr1 'ELSE' elseValExpr=ValExpr1 'FI'
 ;
 
 ValExprLet:
-	'LET' assignments+=Assignment (';' assignments+=Assignment)* 'IN' valExpr=ValExpr1 'NI'
+    'LET' assignments+=Assignment (';' assignments+=Assignment)* 'IN' valExpr=ValExpr1 'NI'
 ;
 
 ValExprBracket:
-	'(' valExpr=ValExpr ')'
+    '(' valExpr=ValExpr ')'
 ;
 
 ValExprRegex:
-	'REGEX' '(' regex=STRING ')'
+    'REGEX' '(' regex=STRING ')'
 ;
 
 ValExprString:
-	name=STRING
+    name=STRING
 ;
 
 ValExprInteger:
-	name=BIG_INT
+    name=BIG_INT
 ;
 
 ValExprContructorCall:
-	name=ConstructorName ( '(' neValExprList=NeValExprList ')' )?
+    name=ConstructorName ( '(' neValExprList=NeValExprList ')' )?
 ;
 
 ValExprFunctionCall:
-	name=FuncName '(' ( neValExprList=NeValExprList )? ')'
+    name=FuncName '(' ( neValExprList=NeValExprList )? ')'
 ;
 
 
 ValExprVar:
-	var=VarName
+    var=VarName
 ;
 
 ValExprConst:
-	const=ConstName
+    const=ConstName
 ;
 
 ConstructorName returns ConstructorName:
-	name=CAPSID
+    name=CAPSID
 ;
 
 FuncName returns FuncName:
-	name=SMALLID	
+    name=SMALLID    
 ;
 
 ConstName returns ConstName:
-	name=SMALLID
+    name=SMALLID
 ;
 
 
@@ -481,19 +501,19 @@ ConstName returns ConstName:
 terminal OPERATOR       :       ( '=' | '+' | '-' | '*' | '^' | '/' | '\\' | '<' | '>' | '@' | '|' | '&' | '%' )+ ;
 //
 //                        
-terminal CAPSID			:	'A'..'Z' ( 'A'..'Z' | 'a'..'z' | '0'..'9' | '_')*;    
-terminal SMALLID		:	'a'..'z' ( 'A'..'Z' | 'a'..'z' | '0'..'9' | '_')*; 
+terminal CAPSID            :    'A'..'Z' ( 'A'..'Z' | 'a'..'z' | '0'..'9' | '_')*;    
+terminal SMALLID        :    'a'..'z' ( 'A'..'Z' | 'a'..'z' | '0'..'9' | '_')*; 
 ////terminal T_INTEGER                   :       ('0'..'9')+ ;
 //
-////terminal PRIMITIVE_TYPE	: 		( 	'Int' 
-////								|	'String'
-////								|	'Bool'
-////								);
+////terminal PRIMITIVE_TYPE    :         (     'Int' 
+////                                |    'String'
+////                                |    'Bool'
+////                                );
 //
-terminal SL_COMMENT 		: '--' !('\n'|'\r')* ('\r'? '\n')?;
+terminal SL_COMMENT         : '--' !('\n'|'\r')* ('\r'? '\n')?;
 
-terminal ML_COMMENT			: '{-' -> '-}';
+terminal ML_COMMENT            : '{-' -> '-}';
 //
 BIG_INT returns ecore::EBigInteger:
-	INT
+    INT
 ;
