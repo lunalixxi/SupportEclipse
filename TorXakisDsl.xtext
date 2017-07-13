@@ -185,12 +185,12 @@ NeTestGoals returns NeTestGoals:
 ;
 
 TestGoal returns TestGoal:
-    'GOAL' '::=' processBehaviour=ProcessBehaviour
+    'GOAL' idName=IdName '::=' processBehaviour=ProcessBehaviour
 ;
 
 ConnectionItem returns ConnectionItem:
     (
-            ConnectionOut
+             ConnectionOut
         |    ConnectionIn
         |    Encoding
         |    Decoding
@@ -278,8 +278,8 @@ NeIdNameList returns NeIdNameList:
 ;
 
 IdName returns IdName:
-        name=SMALLID
-    |     name=CAPSID
+         name=SMALLID
+    |    name=CAPSID
 ;
 
 ChannelName returns ChannelName:
