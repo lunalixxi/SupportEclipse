@@ -15,3 +15,15 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtend.lib,
  org.eclipse.emf.common
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.torxakis.services,
+ org.torxakis.validation,
+ org.torxakis.generator,
+ org.torxakis.torXakisDsl,
+ org.torxakis.scoping,
+ org.torxakis.torXakisDsl.impl,
+ org.torxakis.parser.antlr,
+ org.torxakis.parser.antlr.internal,
+ org.torxakis,
+ org.torxakis.serializer,
+ org.torxakis.torXakisDsl.util
+Import-Package: org.apache.log4j
