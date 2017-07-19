@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/nl.tno.torxakis.language.feature_1.1.1.201705091121.jar" id="nl.tno.torxakis.language.feature" version="1.1.1.201705091121">
-      <category name="TorXakis_Language_Editor"/>
-   </feature>
-   <category-def name="TorXakis_Language_Editor" label="TorXakis Language Editor"/>
-</site>

@@ -1,0 +1,8 @@
+bin/
+src-gen/
+xtend-gen/
+model/
+.launch
+*.xtend
+plugin.xml
+*.jar
