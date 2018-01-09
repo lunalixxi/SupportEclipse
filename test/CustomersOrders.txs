@@ -24,7 +24,18 @@ FUNCDEF isValid_dateTime ( x :: Int ) :: Bool ::= True ENDDEF
 FUNCDEF isValid_decimal  ( x :: Int ) :: Bool ::= True ENDDEF
 FUNCDEF isValid_Conditional_string( x :: Conditional_string ) :: Bool ::= IF isPresent_string(x) THEN isValid_string(value(x)) ELSE True FI ENDDEF
 FUNCDEF isValid_Conditional_dateTime( x :: Conditional_dateTime ) :: Bool ::= IF isPresent_dateTime(x) THEN isValid_dateTime(value(x)) ELSE True FI ENDDEF
-FUNCDEF isValid_Report ( t :: Report ) :: Bool ::= isValid_List_Customer(customers(t), 0, Absent_Int) /\ isValid_List_Order(orders(t), 0, Absent_Int) /\ uniqueCustomerIDs(customers(t)) /\ validCustomerIDsInOrders(orders(t),customers(t)) ENDDEF
+FUNCDEF
+	isValid_Report ( t :: Report ) :: Bool ::=
+	isValid_List_Customer( customers( t ), 0 , Absent_Int) /\
+	isValid_List_Order(
+	orders( t ), 0 ,
+	Absent_Int) /\
+	uniqueCustomerIDs(
+	customers( t )) /\
+	validCustomerIDsInOrders(
+	orders( t ),
+	customers( t ))
+ENDDEF
 FUNCDEF uniqueCustomerIDs ( x :: List_Customer ) :: Bool ::= IF (isNil_Customer (x)) THEN True ELSE not(containsCustomerID(customerID(head (x)), tail(x))) /\ uniqueCustomerIDs(tail(x)) FI ENDDEF
 FUNCDEF containsCustomerID ( cid :: Int; x :: List_Customer ) :: Bool ::= IF (isNil_Customer (x)) THEN False ELSE IF ( customerID(head (x)) == cid ) THEN True ELSE containsCustomerID (cid, tail(x)) FI FI ENDDEF
 FUNCDEF validCustomerIDsInOrders ( o :: List_Order; c :: List_Customer ) :: Bool ::= IF (isNil_Order (o)) THEN True ELSE containsCustomerID(customerID(head(o)), c) /\ validCustomerIDsInOrders (tail(o), c) FI ENDDEF

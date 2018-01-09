@@ -25,5 +25,6 @@ Export-Package: org.torxakis.services,
  org.torxakis.parser.antlr.internal,
  org.torxakis,
  org.torxakis.serializer,
- org.torxakis.torXakisDsl.util
+ org.torxakis.torXakisDsl.util,
+ org.torxakis.formatting2
 Import-Package: org.apache.log4j
